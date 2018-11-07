@@ -74,6 +74,16 @@ class Manager(ManagerContract):
         tmp_adapters.update(adapters)
         self._adapters = tmp_adapters
 
+    def load_default_adapters(self):
+        from filer.models import Image as FilerImage
+        from filer.models import File as FilerFile
+        from retina.adapters.filer import FilerImageAdapter, FilerFileAdapter
+
+        self.update_adapters({
+            FilerImage: FilerImageAdapter,
+            FilerFile: FilerFileAdapter,
+        })
+
     def update_density(self, density: int) -> None:
         self.density = density
 
