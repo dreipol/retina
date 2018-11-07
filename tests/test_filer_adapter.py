@@ -65,24 +65,34 @@ def test_retina_upscale(aliases_mock, get_thumbnailer_mock):
     with Spy(FilerImage) as filer_image:
         filer_image.width.returns(300)
         filer_image.height.returns(300)
-        filer_image.url.returns('dummy-original')
+        filer_image.subject_location = None
 
     # Mock the get_thumbnailer() function call and make it return our mocked Thumbnailer instance
     thumbnail_mock = MagicMock(name='Thumbnail')
     thumbnail_mock.url = 'dummy-generated'
 
     thumbnailer_mock = MagicMock(name='Thumbnailer')
-    thumbnailer_mock.__getitem__.return_value = filer_image
     thumbnailer_mock.get_thumbnail.return_value = thumbnail_mock
     get_thumbnailer_mock.return_value = thumbnailer_mock
     aliases_mock.get.return_value = {'size': (300, 300)}
 
     result = FilerImageAdapter().retina_upscale(filer_image, density=3)
-    assert result == ['dummy-original', 'dummy-generated', 'dummy-generated']
+    assert result == ['dummy-generated', 'dummy-generated', 'dummy-generated']
     thumbnailer_mock.get_thumbnail.assert_has_calls([
+        call({'size': (300, 300)}),
         call({'size': (600, 600)}),
         call({'size': (900, 900)})],
     )
+
+    # Test subject_location
+    filer_image.subject_location = (1, 1)
+    thumbnailer_mock.reset_mock()
+    result = FilerImageAdapter().retina_upscale(filer_image, density=2)
+    assert result == ['dummy-generated', 'dummy-generated']
+    thumbnailer_mock.get_thumbnail.assert_has_calls([
+        call({'size': (300, 300), 'subject_location': (1, 1)}),
+        call({'size': (600, 600), 'subject_location': (1, 1)}),
+    ])
 
     aliases_mock.get.return_value = {}
     with pytest.raises(KeyError):

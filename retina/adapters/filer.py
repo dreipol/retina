@@ -96,12 +96,18 @@ class FilerImageAdapter(SupportsRetina, ImageAdapterContract):
     @staticmethod
     def retina_upscale(file: FilerImage, alias: Optional[str] = None, density: Optional[int] = 1) -> list:
         thumbnailer = get_thumbnailer(file)
-        files = [thumbnailer[alias].url]
 
         # We need to manually raise a KeyError since the get function can return None
         options = dict(aliases.get(alias))
         if not options:
             raise KeyError(alias)
+
+        # Support for subject_location. This only works if scale_and_crop_with_subject_location is in
+        # the THUMBNAIL_PROCESSORS and crop in the given alias is True
+        if getattr(file, 'subject_location', None):
+            options.update({'subject_location': file.subject_location})
+
+        files = [thumbnailer.get_thumbnail(options).url]
 
         # Throws AttributeError if no size defined so make sure this property is set in your thumbnail alias
         original_size = options['size']
