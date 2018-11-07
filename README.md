@@ -24,7 +24,7 @@ First, install the latest release:
 
     $ pip install retina
 
-Register the adapters you want to use somewhere at boot:
+Register the adapters you want to use somewhere at boot. If you're using django, a good location is in the `ready` method of a [AppConfig](https://docs.djangoproject.com/en/2.1/ref/applications/#django.apps.AppConfig.ready)
 
 ```python  
 from filer.models import Image as FilerImage
