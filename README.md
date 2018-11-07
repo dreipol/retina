@@ -9,13 +9,13 @@ image = File(user.profile_image).srcset('portrait')
 
 # image holds now the following dict:
 {
-    'urls': {
-        'default': [
-            'path/to/images/profile_image__150x200.jpg',
-            'path/to/images/profile_image__300x400.jpg',
-        ]
-    },
-    'alt': 'John Doe',
+  'urls': {
+    'default': [
+      'path/to/images/profile_image__150x200.jpg',
+      'path/to/images/profile_image__300x400.jpg',
+    ]
+  },
+  'alt': 'John Doe',
 }
 ```
 
@@ -57,13 +57,13 @@ Initiate the `retina.File` class with a `django-filer` `File` or `Image` model a
 image = File(user.profile_image).srcset('portrait')
 
 {
-    'urls': {
-        'default': [
-            'path/to/images/profile_image__150x200.jpg',
-            'path/to/images/profile_image__300x400.jpg',
-        ]
-    },
-    'alt': 'John Doe',
+  'urls': {
+    'default': [
+      'path/to/images/profile_image__150x200.jpg',
+      'path/to/images/profile_image__300x400.jpg',
+    ]
+  },
+  'alt': 'John Doe',
 }
 ```
 
@@ -74,14 +74,14 @@ You can chain an additional density method to get a @3, @4, e.t.c version of the
 image = File(user.profile_image).density(3).srcset('portrait')
 
 {
-    'urls': {
-        'default': [
-            'path/to/images/profile_image__150x200.jpg',
-            'path/to/images/profile_image__300x400.jpg',
-            'path/to/images/profile_image__450x600.jpg',
-        ]
-    },
-    'alt': 'John Doe',
+  'urls': {
+    'default': [
+      'path/to/images/profile_image__150x200.jpg',
+      'path/to/images/profile_image__300x400.jpg',
+      'path/to/images/profile_image__450x600.jpg',
+    ]
+  },
+  'alt': 'John Doe',
 }
 ```
 
@@ -89,27 +89,27 @@ image = File(user.profile_image).density(3).srcset('portrait')
 If you're website needs different image dimensions, say on mobile than on desktop, you can do that as well:
 
 ```python 
-THUMBNAIL_ALIASES={
-	'': {
-		'portrait_sm': {'size': (100, 100)},
-		'portrait_xl': {'size': (150, 200)},
-	}
+THUMBNAIL_ALIASES = {
+  '': {
+    'portrait_sm': {'size': (100, 100)},
+    'portrait_xl': {'size': (150, 200)},
+    }
 },
     
 image = File(user.profile_image).srcset('portrait', ['sm', 'xl'])
 
 {
-	'urls': {
-        'sm': [
-            'path/to/images/profile_image__100x100.jpg',
-            'path/to/images/profile_image__200x200.jpg',
-        ],
-        'xl': [
-            'path/to/images/profile_image__150x200.jpg',
-            'path/to/images/profile_image__300x400.jpg',
-        ]
-    },
-    'alt': 'John Doe',
+  'urls': {
+    'sm': [
+      'path/to/images/profile_image__100x100.jpg',
+      'path/to/images/profile_image__200x200.jpg',
+    ],
+    'xl': [
+      'path/to/images/profile_image__150x200.jpg',
+      'path/to/images/profile_image__300x400.jpg',
+    ]
+  },
+  'alt': 'John Doe',
 }
 ```
 
@@ -122,15 +122,15 @@ Pass in any arbitary additional data to the returned dict:
 image = File(user.profile_image)).additional(foo='bar', bar='baz').srcset('portrait')
 
 {
-	'urls': {
-        'default': [
-            'path/to/images/profile_image__150x200.jpg',
-            'path/to/images/profile_image__300x400.jpg',
-        ],
-    },
-    'foo': 'bar',
-    'bar': 'baz',
-    'alt': 'John Doe',
+  'urls': {
+    'default': [
+      'path/to/images/profile_image__150x200.jpg',
+      'path/to/images/profile_image__300x400.jpg',
+    ],
+  },
+  'foo': 'bar',
+  'bar': 'baz',
+  'alt': 'John Doe',
 }
 ```
 
