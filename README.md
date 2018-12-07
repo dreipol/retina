@@ -1,5 +1,7 @@
 # 👁 Retina
 
+[GitHub](https://github.com/dreipol/retina) | [PyPI](https://pypi.org/project/retina/)
+
 Retina takes an image and a thumbnail alias and generates a dict with resized images. So if your `easy_thumbnails`
 alias looks something like this `'portrait': {'size': (150, 200)}` you'll get the resized version of the original image
 plus a retina version of it.
